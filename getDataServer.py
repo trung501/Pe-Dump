@@ -63,9 +63,8 @@ def createDataframeFromPEdump(nameFile, pe, malware: bool):
 
 
 @app.get("/")
-async def index():
-    return {"message": "Hello World"}
-    # return RedirectResponse(url="/docs")
+def index():
+    return RedirectResponse(url="/docs")
 
 
 @app.post("/createData")
