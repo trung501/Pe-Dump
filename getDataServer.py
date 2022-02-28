@@ -12,9 +12,10 @@ import unidecode
 app_desc = """<h2> Try uploading a Portable Executable(PE) file"""
 app = FastAPI(description=app_desc)
 
-pathDataCsv="PeDumpData.csv"
+pathDataCsv = "PeDumpData.csv"
 
-def createDataframeFromPEdump(nameFile,pe,malware: bool):
+
+def createDataframeFromPEdump(nameFile, pe, malware: bool):
 
     dosHeaders = ['e_magic', 'e_cblp', 'e_cp', 'e_crlc', 'e_cparhdr',
                   'e_minalloc', 'e_maxalloc', 'e_ss', 'e_sp', 'e_csum', 'e_ip', 'e_cs',
@@ -40,7 +41,7 @@ def createDataframeFromPEdump(nameFile,pe,malware: bool):
     oheaders = {}
     imd1 = {}
 
-    df = pd.DataFrame({"Name":nameFile}, index=[0])
+    df = pd.DataFrame({"Name": nameFile}, index=[0])
 
     for x in dosHeaders:
         dheaders[x] = getattr(pe.DOS_HEADER, x)
@@ -64,15 +65,13 @@ def createDataframeFromPEdump(nameFile,pe,malware: bool):
     return df
 
 
-
 @app.get("/", include_in_schema=False)
 async def index():
     return RedirectResponse(url="/docs")
 
 
-
 @app.post("/createData")
-def parse(file: UploadFile = File(...),malware: bool=False):
+def parse(file: UploadFile = File(...), malware: bool = False):
     extension = os.path.splitext(file.filename)[1]
     _, path = tempfile.mkstemp(prefix='parser_', suffix=extension)
     nameFile = unidecode.unidecode(file.filename).replace(" ", "_")
@@ -82,14 +81,12 @@ def parse(file: UploadFile = File(...),malware: bool=False):
 
     # extract content
     content = pefile.PE(path, fast_load=True)
-    dataframe = createDataframeFromPEdump(nameFile,content,malware)
-    if os.path.isfile(pathDataCsv):
-        dataframe.to_csv(pathDataCsv, mode='a', index=False, header=False)
-    else:
-        dataframe.to_csv(pathDataCsv, mode='a', index=False, header=True)
+    dataframe = createDataframeFromPEdump(nameFile, content, malware)
+    # if os.path.isfile(pathDataCsv):
+    #     dataframe.to_csv(pathDataCsv, mode='a', index=False, header=False)
+    # else:
+    #     dataframe.to_csv(pathDataCsv, mode='a', index=False, header=True)
     print(dataframe)
     return dataframe.to_dict(orient="index")
     os.close(_)
     os.remove(path)
-
-
