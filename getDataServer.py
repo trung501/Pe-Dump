@@ -7,7 +7,7 @@ import os
 import tempfile
 import unidecode
 # creating fastApi app
-app = FastAPI(description=app_desc)
+app = FastAPI()
 
 pathDataCsv = "PeDumpData.csv"
 
