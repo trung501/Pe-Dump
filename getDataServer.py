@@ -87,9 +87,10 @@ def readDatabase():
         result.append({'Name':dic['Name'], 'Malware':dic['Malware']})
     return result
 
-@app.get("/getLinkDownloadCsv")
-def getLinkDownloadCsv():
-    return "https://data.heroku.com/dataclips/mpulzvkgxrezvytdygznvmkmogxo.csv"
+@app.get("/getCsv")
+def csv():
+    link= "https://data.heroku.com/dataclips/mpulzvkgxrezvytdygznvmkmogxo.csv"
+    return  RedirectResponse(url=link)
 
 @app.post("/createData")
 def createData(file: UploadFile = File(...), malware: bool = False):
