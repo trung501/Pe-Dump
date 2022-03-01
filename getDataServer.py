@@ -95,7 +95,7 @@ def parse(file: UploadFile = File(...), malware: bool = False):
     # else:
     #     dataframe.to_csv(pathDataCsv, mode='a', index=False, header=True)
     print(dataframe)
-    # dataframe.to_sql('PeData', engine, if_exists='append', index=False)
+    dataframe.to_sql('PeData', engine, if_exists='append', index=False)
     return dataframe.to_dict(orient="index")
     os.close(_)
     os.remove(path)
