@@ -77,9 +77,19 @@ def createDataframeFromPEdump(nameFile, pe, malware: bool):
 def index():
     return RedirectResponse(url="/docs")
 
+@app.get("/readDatabase")
+def readDatabase():
+    df = pd.read_sql_table('PeData', engine)
+    print(df)
+    lstDict=df.to_dict(orient="index")
+    result=[]
+    for dic in lstDict.values():
+        result.append({'Name':dic['Name'], 'Malware':dic['Malware']})
+    return result
+
 
 @app.post("/createData")
-def parse(file: UploadFile = File(...), malware: bool = False):
+def createData(file: UploadFile = File(...), malware: bool = False):
     extension = os.path.splitext(file.filename)[1]
     _, path = tempfile.mkstemp(prefix='parser_', suffix=extension)
     nameFile = unidecode.unidecode(file.filename).replace(" ", "_")
