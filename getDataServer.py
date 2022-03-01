@@ -7,16 +7,16 @@ import os
 import tempfile
 import unidecode
 
-# from sqlalchemy import create_engine
+from sqlalchemy import create_engine
 
 # creating fastApi app
 app = FastAPI()
 
 pathDataCsv = "PeDumpData.csv"
 
-# DATABASE_URL="postgresql://tqsihnskfsieci:1d6286a180d3584430100339b1a8cd14bcb3614b195ff97267db49f2f7e79930@ec2-34-233-157-9.compute-1.amazonaws.com:5432/d35eo9b9dojb3j"
+DATABASE_URL="postgresql://tqsihnskfsieci:1d6286a180d3584430100339b1a8cd14bcb3614b195ff97267db49f2f7e79930@ec2-34-233-157-9.compute-1.amazonaws.com:5432/d35eo9b9dojb3j"
 
-# engine = create_engine( DATABASE_URL)
+engine = create_engine( DATABASE_URL)
 
 
 
