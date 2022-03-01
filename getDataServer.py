@@ -77,10 +77,6 @@ def createDataframeFromPEdump(nameFile, pe, malware: bool):
 def index():
     return RedirectResponse(url="/docs")
 
-@app.get("/")
-def getPeData():
-    return RedirectResponse(url="/docs")
-
 
 @app.post("/createData")
 def parse(file: UploadFile = File(...), malware: bool = False):
