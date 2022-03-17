@@ -109,7 +109,10 @@ def createData(file: UploadFile = File(...), malware: bool = False):
     # else:
     #     dataframe.to_csv(pathDataCsv, mode='a', index=False, header=True)
     print(dataframe)
-    dataframe.to_sql('PeData', engine, if_exists='append', index=False)
+    try:
+        dataframe.to_sql('PeData', engine, if_exists='append', index=False)
+    except Exception as e:
+        print(e)
     return dataframe.to_dict(orient="index")
     os.close(_)
     os.remove(path)
