@@ -77,20 +77,20 @@ def createDataframeFromPEdump(nameFile, pe, malware: bool):
 def index():
     return RedirectResponse(url="/docs")
 
-@app.get("/readDatabase")
-def readDatabase():
-    df = pd.read_sql_table('PeData', engine)
-    print(df)
-    lstDict=df.to_dict(orient="index")
-    result=[]
-    for dic in lstDict.values():
-        result.append({'Name':dic['Name'], 'Malware':dic['Malware']})
-    return result
+# @app.get("/readDatabase")
+# def readDatabase():
+#     df = pd.read_sql_table('PeData', engine)
+#     print(df)
+#     lstDict=df.to_dict(orient="index")
+#     result=[]
+#     for dic in lstDict.values():
+#         result.append({'Name':dic['Name'], 'Malware':dic['Malware']})
+#     return result
 
-@app.get("/getCsv")
-def csv():
-    link= "https://data.heroku.com/dataclips/mpulzvkgxrezvytdygznvmkmogxo.csv"
-    return  RedirectResponse(url=link)
+# @app.get("/getCsv")
+# def csv():
+#     link= "https://data.heroku.com/dataclips/mpulzvkgxrezvytdygznvmkmogxo.csv"
+#     return  RedirectResponse(url=link)
 
 @app.post("/createData")
 def createData(file: UploadFile = File(...), malware: bool = False):
